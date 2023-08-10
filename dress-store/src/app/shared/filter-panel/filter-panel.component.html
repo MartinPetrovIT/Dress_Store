@@ -1,0 +1,167 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilter" href=""
+            aria-controls="offcanvasWithBothOptions"><i class="bi bi-funnel-fill"></i> Filter</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li ngbDropdown  class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownColor"
+                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-palette-fill"></i> Color
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownColor">
+                        <a class="dropdown-item" href="#">Actioan</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBrand"
+                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-tags-fill"></i> Brand
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownBrand">
+                        <a class="dropdown-item" href="#">Actiosn</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSorting"
+                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-sort-alpha-down"></i> Sorting
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownSorting">
+                        <a class="dropdown-item" href="#">Actiona</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilter">
+    <div class="offcanvas-header">
+        <h4 class="offcanvas-title">Filter</h4>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Search Input -->
+        <div class="mb-3">
+            <label for="searchInput" class="form-label">Search</label>
+            <input type="text" class="form-control" id="searchInput">
+        </div>
+
+        <!-- Price Slider -->
+        <div class="mb-3">
+            <label for="minPriceInput" class="form-label">Min Price</label>
+            <input type="number" class="form-control" id="minPriceInput" [(ngModel)]="minPrice">
+        </div>
+        <div class="mb-3">
+            <label for="maxPriceInput" class="form-label">Max Price</label>
+            <input type="number" class="form-control" id="maxPriceInput" [(ngModel)]="maxPrice">
+        </div>
+        <div class="mb-3">
+            <label for="priceSlider" class="form-label">Price Range</label>
+            <div class="d-flex justify-content-between">
+                <span>{{ minPrice }}</span>
+                <span>{{ maxPrice }}</span>
+            </div>
+            <input type="range" class="form-range" id="priceSlider" [(ngModel)]="priceSliderValue" [min]="minPrice"
+                [max]="maxPrice">
+            <div class="d-flex justify-content-between">
+                <span>{{ priceSliderValue }}</span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Categories</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="category1" id="category1">
+                <label class="form-check-label" for="category1">Category 1</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="category2" id="category2">
+                <label class="form-check-label" for="category2">Category 2</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="slideCheckbox" [(ngModel)]="shouldSlide2">
+                <label class="form-check-label" for="slideCheckbox">Slide Category 2</label>
+            </div>
+            <!-- Category Collapsible Panels with Checkboxes -->
+            <div class="mb-3">
+                <label class="form-label">Categories</label>
+
+                <div class="accordion" id="categoryAccordion">
+                    <div class="accordion-item" *ngIf="shouldSlide2">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Category 1
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#categoryAccordion">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="category1" id="category1">
+                                    <label class="form-check-label" for="category1">Subcategory 1.1</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="category2" id="category2">
+                                    <label class="form-check-label" for="category2">Subcategory 1.2</label>
+                                </div>
+                                <!-- Add more checkboxes as needed -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="slideCheckbox" [(ngModel)]="shouldSlide">
+                        <label class="form-check-label" for="slideCheckbox">Slide Category 2</label>
+                    </div>
+                    <div class="accordion-item" *ngIf="shouldSlide">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Category 2
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#categoryAccordion">
+                                <div class="accordion-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="category3"
+                                            id="category3">
+                                        <label class="form-check-label" for="category3">Subcategory 2.1</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="category4"
+                                            id="category4">
+                                        <label class="form-check-label" for="category4">Subcategory 2.2</label>
+                                    </div>
+                                    <!-- Add more checkboxes as needed -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add more accordion items as needed -->
+                </div>
+            </div>
+
+            <!-- Apply Button -->
+            <button class="btn btn-primary" type="button">Apply Filters</button>
+        </div>
+    </div>
+</div>

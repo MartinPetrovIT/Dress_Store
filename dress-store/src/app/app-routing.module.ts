@@ -5,6 +5,7 @@ import { WithoutLayoutComponent } from './layouts/without-layout/without-layout.
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './core/home/home.component';
+import { ClothesComponent } from './core/clothes/clothes.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       },
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      { path: 'clothes', component: ClothesComponent },
       // Other routes with layout
     ],
   },
