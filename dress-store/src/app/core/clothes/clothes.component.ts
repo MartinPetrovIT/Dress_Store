@@ -7,6 +7,16 @@ import { Component } from '@angular/core';
 })
 export class ClothesComponent {
   filterPanelOpen = false;
+  heartActive: boolean = false;
+  showFullText = false;
+
+  toggleTextExpansion() {
+    this.showFullText = !this.showFullText;
+  } 
+
+  toggleHeart() {
+      this.heartActive = !this.heartActive;
+  }
   toggleFilterPanel() {
     this.filterPanelOpen = !this.filterPanelOpen;
     const filterOffcanvas = document.getElementById('filterOffcanvas');

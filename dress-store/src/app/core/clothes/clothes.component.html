@@ -1,1 +1,22 @@
 <app-filter-panel></app-filter-panel>
+
+<div style="margin-top: 15px;" class="row d-flex justify-content-center mb-4">
+    <div class="card d-flex flex-column" style="width: 15rem; margin-right: 5px;">
+        <img class="card-img-top" src="assets/img/babenciaga.jpg" alt="Card image cap">
+        <div class="card-body flex-grow-1">
+            <h5 class="card-title text-truncate">Card title</h5>
+            <p class="card-text {{ showFullText ? 'text-truncate' : '' }}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <button class="btn btn-link" (click)="toggleTextExpansion()">
+                {{ showFullText ? 'Show less' : 'Show more' }}
+            </button>
+            <div class="d-flex justify-content-between">
+
+                <a class="btn btn-primary col-md-5"><i class="bi bi-cart"></i></a>
+                
+                <a  class="btn  col-md-3" (click)="toggleHeart()" [class.active]="heartActive">
+                    <i class="bi bi-heart"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
