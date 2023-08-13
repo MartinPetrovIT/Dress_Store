@@ -9,7 +9,16 @@ export class ClothesComponent {
   filterPanelOpen = false;
   heartActive: boolean = false;
   showFullText = false;
+  images: string[] = ['assets/img/dsquared.jpeg', 'assets/img/babenciaga.jpg', 'assets/img/babenciaga.jpg'];
+  currentImageIndex = 0;
 
+  prevImage() {
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+  }
+
+  nextImage() {
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+  }
   toggleTextExpansion() {
     this.showFullText = !this.showFullText;
   } 

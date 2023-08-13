@@ -1,4 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Type} from '@angular/core';
+import { DataService } from '../data.service';
+import { IProduct } from '../product.model';
 
 @Component({
   selector: 'app-home',
@@ -6,13 +8,23 @@ import { Component, OnInit} from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 
+
 export class HomeComponent implements OnInit {
 
   slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
-
-  constructor() { }
+  products: IProduct[] = [];
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.hello().subscribe(
+      (products) => {
+          this.products = products;
+          console.log("My products:", JSON.stringify(products, null, 2)); // Log the received products
+      },
+      (error) => {
+          console.error('Error getting products:', error);
+      }
+  );
     this.slides[0] = {
       id: 0,
       src: './assets/img/babenciaga.jpg',

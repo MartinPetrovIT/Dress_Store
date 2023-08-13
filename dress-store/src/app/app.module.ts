@@ -12,22 +12,25 @@ import { WithLayoutComponent } from './layouts/with-layout/with-layout.component
 import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { SharedModule } from '@coreui/angular';
+import { HttpConfigDressStore } from './http.config';
 
 @NgModule({
+  providers:[HttpConfigDressStore],
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
     WithoutLayoutComponent,
     WithLayoutComponent,
-    
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
     CoreModule,
     AuthModule,
     AppRoutingModule,
@@ -35,7 +38,6 @@ import { SharedModule } from '@coreui/angular';
     MaterialModule,
     SharedModule
   ],
-  providers: [],
   bootstrap: [AppComponent],
 
 })

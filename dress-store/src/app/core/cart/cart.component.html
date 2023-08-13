@@ -1,0 +1,65 @@
+<div class="row" style="margin-top: 20px;">
+
+    <div class="col-md-5" style="margin-left: 20px;">
+        
+        <h2>Checkout</h2>
+        <form (ngSubmit)="submitOrder()" #checkoutForm="ngForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="customer.name">
+            </div>
+            <div class="mb-3">
+                <label for="familyName" class="form-label">Family Name</label>
+                <input type="text" class="form-control" id="familyName" name="familyName" required
+                    [(ngModel)]="customer.familyName">
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" required
+                    [(ngModel)]="customer.address">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required [(ngModel)]="customer.phone">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required [(ngModel)]="customer.email">
+            </div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+    </div>
+    
+    <div class="container mt-8 col-md-6">
+        <h2>Your Cart</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Repeat this row for each item in the cart -->
+                <tr *ngFor="let item of cartItems">
+                    <td><img src="{{ item.image }}" alt="Product Image" width="50"></td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>
+                        <select class="form-select" [(ngModel)]="item.quantity" (ngModelChange)="updateTotal(item)">
+                            <option *ngFor="let qty of quantities" [value]="qty">{{   qty   }}</option>
+                        </select>
+                    </td>
+                    <td>{{ item.total }}</td>
+                    <td><button class="btn btn-danger" (click)="removeFromCart(item)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
