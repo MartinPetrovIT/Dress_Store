@@ -1,23 +1,39 @@
 <mat-card>
     <mat-card-title>Login</mat-card-title>
 <mat-card-content>
- <form > 
+ <form [formGroup]="loginForm" (ngSubmit)="login()"> 
     <!-- [formGroup]="form" (ngSubmit)="submit()" -->
   <p>
     <mat-form-field>
-        <input type="text" matInput placeholder="Email" ngModel name="email">
+        <input type="text" matInput required email placeholder="Email" ngModel  formControlName="email">
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
-      <input type="password" matInput placeholder="Password" ngModel name="password">
+      <input type="password" matInput  required placeholder="Password" ngModel  formControlName="password">
     </mat-form-field>
   </p>
 
-  <!-- <p *ngIf="error" class="error">
+  <p *ngIf="error" class="error">
     {{ error }}
-  </p> -->
+  </p>
+  
+  <p *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched" class="error">
+    Password must be at least 8 characters long.
+  </p>
+  
+  <p *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched" class="error">
+    Password is required.
+  </p>
+
+  <p *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched" class="error">
+    Email is required.
+  </p>
+
+  <p *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched" class="error">
+    Invalid email format.
+  </p>
 
   <div class="button">
     <button type="submit" mat-button>Login</button>

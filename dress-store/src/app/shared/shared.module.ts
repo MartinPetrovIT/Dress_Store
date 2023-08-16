@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { FilterPanelComponent } from './filter-panel/filter-panel.component';
-import { FormsModule } from '@angular/forms';
+import { ProductModalComponent } from './product-modal/product-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -10,14 +11,17 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     SpinnerComponent,
     FilterPanelComponent,
+    ProductModalComponent,
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[
     SpinnerComponent,
-    FilterPanelComponent
+    FilterPanelComponent,
+    ProductModalComponent,
   ]
 })
 export class SharedModule { }

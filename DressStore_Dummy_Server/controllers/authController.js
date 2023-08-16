@@ -1,67 +1,28 @@
-// // const { register,login } = require('../services/userService');
-// // const { parserError } = require('../util/parser');
+const { register,login } = require('../services/userService');
 
-// const authController = require('express').Router();
+const authController = require('express').Router();
 
-// authController.post('/login', async (req,res)=>{
-//     if(req.user)
-//     {
-//        return res.redirect("/")
-//     }
-//     try{
-//         if(req.body.email == '' || req.body.password == '')
-//         {
-//             throw new Error('All fields are required')
-//         }
 
-//         const token = await login(req.body.email, req.body.password)
-        
-//         res.cookie('token', token)
-//         res.redirect('/')
-//     }catch(err){
 
-//         const eroos = parserError(err)
-//         res.render('login',{
-//             title: ' Page',
-//             eroos,
-//             body:{
-//                 email: req.body.email
-//             }
-//         })
-//     }
-// })
+authController.post('/login', async (req, res) => {
+    const response = await login(req.body.email, req.body.password)
+    if (response.status != 200) {
+        res.status(response.status).json({ data: response.message });
+    }
+    else {
+        res.json({status: 200, data: response.token });
+    }
+})
 
-// authController.post('/register', async (req,res)=>{
-//     if(req.user)
-//     {
-//        return res.redirect("/")
-//     }
-//     try{
+authController.post('/register', async (req, res) => {
+    const response = await register(req.body.email, req.body.password)
 
-//         if(req.body.username == ''  || req.body.email == '' || req.body.password == '')
-//         {
-//             throw new Error('All fields are required')
-//         }
-//         if(req.body.password != req.body.rePassword)
-//         {
-//             throw new Error('Password do not match')
-//         }
+    if (response.status != 200) {
+        res.json({ status: 500, data: response.message });
+    }
+    else {
+        res.json({ status: 200, data: response.token });
+    }
+})
 
-//         const token = await register(req.body.username, req.body.password, req.body.email)
-        
-//         res.cookie('token', token)
-//         res.redirect('/')
-//     }catch(err){
-
-//         const eroos = parserError(err)
-//         res.render('register',{
-//             title: 'Register Page',
-//             eroos,
-//             body:{
-//                 email: req.body.email
-//             }
-//         })
-//     }
-// })
-
-// module.exports=authController;
+module.exports=authController;

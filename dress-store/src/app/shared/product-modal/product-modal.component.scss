@@ -1,0 +1,27 @@
+.image-container {
+    position: relative;
+    min-height: 369px;
+    min-width: 299px; /* Set the desired max height for the images */
+    max-height: 370px; 
+    max-width: 300px; 
+    overflow: hidden;
+}
+
+.image-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    z-index: 1;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}

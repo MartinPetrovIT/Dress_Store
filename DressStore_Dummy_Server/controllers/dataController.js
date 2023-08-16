@@ -12,6 +12,21 @@ dataController.get('/dress',async (req,res)=>{
   )
 })
 
+dataController.post('/addToCart', async (req, res) => {
+  try {
+      const token = req.header('Authorization');
+      const decoded = await verifyToken(token);
+      
+      await addToCartList(decoded._id, req.body.product);
+
+      // Successfully added to cart
+      res.status(200).json({ message: 'Product added to cart.' });
+  } catch (error) {
+      console.error('Error adding to cart:', error);
+      res.status(500).json({ error: 'An error occurred while adding to cart.' });
+  }
+})
+
 // toyController.get('/catalog',async (req,res)=>{
 //     const toys = await getAll();
 //     res.render('catalog',{

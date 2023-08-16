@@ -6,11 +6,14 @@ const routesConfig = require("./config/routes")
 const port = 3000;
 
 
-async function start(){
+async function start() {
     const app = express();
+
     expressConfig(app)
     routesConfig(app)
     databaseConfig()
-    app.listen(port,() => console.log(`server is litening on port ${port}`))
+
+    app.use('/images', express.static('images'));
+    app.listen(port, () => console.log(`server is litening on port ${port}`))
 }
 start();

@@ -1,12 +1,12 @@
 const {Schema, model} = require('mongoose')
 
 const dressSchema = new Schema({
-    id:{type: Number},
     gender: {type: String},
     brand :{type: String},
     name :{type: String},
-    size :{type: String},
+    sizes :{type: []},
     imageUrls: {type: []},
+    colors:{type: []},
     description: {type: String},
     category: {type: String},
     price: {type: Number},

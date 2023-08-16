@@ -37,6 +37,8 @@
                 <tr>
                     <th>Image</th>
                     <th>Product</th>
+                    <th>Size</th>
+                    <th>Color</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
@@ -44,18 +46,19 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Repeat this row for each item in the cart -->
-                <tr *ngFor="let item of cartItems">
-                    <td><img src="{{ item.image }}" alt="Product Image" width="50"></td>
-                    <td>{{ item.name }}</td>
+                <tr *ngFor="let item of items; let i = index">
+                    <td><img src="{{ item.imageUrl }}" alt="Product Image" width="50"></td>
+                    <td>{{ item.brand +  ' - ' + item.name }}</td>
+                    <td>{{ item.size }}</td>
+                    <td>{{ item.color }}</td>
                     <td>{{ item.price }}</td>
                     <td>
-                        <select class="form-select" [(ngModel)]="item.quantity" (ngModelChange)="updateTotal(item)">
+                        <select class="form-select" [(ngModel)]="item.quantity" (ngModelChange)="updateTotal(i)">
                             <option *ngFor="let qty of quantities" [value]="qty">{{   qty   }}</option>
                         </select>
                     </td>
                     <td>{{ item.total }}</td>
-                    <td><button class="btn btn-danger" (click)="removeFromCart(item)">Remove</button></td>
+                    <td><button class="btn btn-danger" (click)="removeFromCart(i)">Remove</button></td>
                 </tr>
             </tbody>
         </table>

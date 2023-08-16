@@ -1,29 +1,50 @@
 <mat-card>
     <mat-card-title>Register</mat-card-title>
 <mat-card-content>
- <form > 
+ <form [formGroup]="registerForm" (ngSubmit)="register()"> 
     <!-- [formGroup]="form" (ngSubmit)="submit()" -->
   <p>
     <mat-form-field>
-      <input type="text" matInput placeholder="Email" ngModel name="email">
+      <input type="text" matInput required email placeholder="Email" ngModel  formControlName="email">
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
-      <input type="password" matInput placeholder="Password" ngModel name="password">
+      <input type="password" matInput  required placeholder="Password" ngModel  formControlName="password">
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
-      <input type="password" matInput placeholder="Password" ngModel name="rePassword">
+      <input type="password" matInput  required placeholder="Password" ngModel  formControlName="rePassword">
     </mat-form-field>
   </p>
 
-  <!-- <p *ngIf="error" class="error">
+  <p *ngIf="error" class="error">
     {{ error }}
-  </p> -->
+  </p>
+
+  <p *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched" class="error">
+    Password must be at least 8 characters long.
+  </p>
+  
+  <p *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched" class="error">
+    Password is required.
+  </p>
+
+  <p *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched" class="error">
+    Email is required.
+  </p>
+
+  <p *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched" class="error">
+    Invalid email format.
+  </p>
+  
+  
+  <p *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('rePassword')?.touched" class="error">
+    Passwords do not match.
+  </p>
 
   <div class="button">
     <button type="submit" mat-button>Register</button>

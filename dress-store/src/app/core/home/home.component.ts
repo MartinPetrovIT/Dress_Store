@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this.dataService.hello().subscribe(
       (products) => {
           this.products = products;
-          console.log("My products:", JSON.stringify(products, null, 2)); // Log the received products
       },
       (error) => {
           console.error('Error getting products:', error);

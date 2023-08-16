@@ -1,0 +1,79 @@
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Product Details</h5>
+                <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal"
+                  (click)="unTouch()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="productForm" >
+                    <div class="row">
+                        <div class="col-md-5">
+                            <!-- Left side with photos and navigation -->
+                            <div class="image-container position-relative">
+                                <button class="image-nav-btn prev" (click)="prevImage()"><i
+                                        class="bi bi-arrow-left"></i></button>
+                                <div style="border: 1px solid black;">
+                                    <img [src]="product.imageUrls[currentImageIndex]" class="img-fluid d-block w-100"
+                                        style="width: 250px; height: 330px;" alt="Product Image">
+                                </div>
+                                <!-- Add more images as needed -->
+
+                                <button class="image-nav-btn next" (click)="nextImage()"><i
+                                        class="bi bi-arrow-right"></i></button>
+
+                                <div class="mb-3 mt-2">
+                                    <div class="row">
+                                        <h3 class="form-control-static font-weight-bold text-center">Price: {{
+                                            product.price }}$</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <!-- Right side with details -->
+                            <h4>{{product.brand + ' - ' + product.name}}</h4>
+                            <p>{{product.description}}</p>
+                            <!-- Dropdown for options -->
+                            <div *ngIf="product.type === 'shoes'" class="mb-3">
+                                <label for="optionsDropdown" class="form-label">Select size:</label>
+                                <select class="form-select" [(ngModel)]="product.size" id="optionsDropdown" formControlName="shoesSizesDropdown" required>
+                                  <option *ngFor="let size of shoesSizes" [value]="size">{{ size }}</option>
+                                </select>
+                                <div *ngIf="productForm.get('shoesSizesDropdown')?.hasError('required') && productForm.get('shoesSizesDropdown')?.touched" class="text-danger">
+                                  Size is required.
+                                </div>
+                              </div>
+                              
+                              <div *ngIf="product.type === 'dress'" class="mb-3">
+                                <label for="optionsDropdown" class="form-label">Select size:</label>
+                                <select class="form-select" [(ngModel)]="product.size" id="optionsDropdown" formControlName="dressSizesDropdown" required>
+                                  <option *ngFor="let size of dressSizes" [value]="size">{{ size }}</option>
+                                </select>
+                                <div *ngIf="productForm.get('dressSizesDropdown')?.hasError('required') && productForm.get('dressSizesDropdown')?.touched" class="text-danger">
+                                  Size is required.
+                                </div>
+                              </div>
+                              
+                              <div class="mb-3">
+                                <label for="optionsDropdown" class="form-label">Select color:</label>
+                                <select class="form-select" [(ngModel)]="product.color" id="optionsDropdown" formControlName="color" required>
+                                  <option *ngFor="let color of product.colors" [value]="color">{{ color }}</option>
+                                </select>
+                                <div *ngIf="productForm.get('color')?.hasError('required') && productForm.get('color')?.touched" class="text-danger">
+                                  Color is required.
+                                </div>
+                              </div>
+                            <!-- Add to Cart button -->
+                            <button class="btn btn-primary" (click)="addToCart()">Add to Cart</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

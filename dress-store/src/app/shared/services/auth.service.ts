@@ -1,27 +1,47 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { HttpConfigDressStore } from 'src/app/http.config';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthService {
-  private isAuthenticated$ = new BehaviorSubject<boolean>(false);
+   isAuthenticated$ = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
+  constructor(private http: HttpClient, private conf: HttpConfigDressStore) {}
 
-  isAuthenticated() {
+   isAuthenticated() {
+    this.isAuthenticated$.next(!!this.getToken());
     return this.isAuthenticated$.asObservable();
   }
 
-  login() {
-    this.isAuthenticated$.next(true);
+  login(email: string, password: string) {
+    return this.http.post<{ status: number,  data: string }>(`${this.conf.baseUrl}/auth/login`, { email, password }, httpOptions);
   }
 
-  register() {
-    this.isAuthenticated$.next(true);
+  register(email: string, password: string) {
+    return this.http.post<{ status: number,  data: string }>(`${this.conf.baseUrl}/auth/register`, { email, password }, httpOptions);
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('token', token);
+    this.isAuthenticated()
+  }
+
+  getToken() {
+    return localStorage.getItem('token');
   }
 
   logout() {
-    this.isAuthenticated$.next(false);
+    localStorage.removeItem('token');
+    this.isAuthenticated()
   }
 }
