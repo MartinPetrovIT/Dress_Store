@@ -7,3 +7,26 @@
   .content {
     flex: 1;
   }
+
+/* app.component.css */
+.global-message {
+  position: fixed;
+  top: 20px; /* Adjust the distance from the top */
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff; /* White text color */
+  padding: 20px; /* Increase the padding for a bigger container */
+  font-size: 18px; /* Increase the font size for larger text */
+  border-radius: 15px; /* Add border-radius for round edges */
+  background-color: #f44336; /* Red background color */
+  opacity: 0.9;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 9999;
+}
+
+/* Style for the message content */
+.message-content {
+  background-color: inherit;
+  border-radius: inherit;
+}
+

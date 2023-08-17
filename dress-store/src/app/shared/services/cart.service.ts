@@ -5,6 +5,8 @@ import { IProductModalModel } from '../product-modal/product.modal.model';
 import { AuthService } from './auth.service';
 import { IProductCartModel } from './product.cart.model';
 import { BehaviorSubject, Observable, count } from 'rxjs';
+import { ICustomerCartModel } from 'src/app/core/cart/customer.model';
+import { WishlistService } from './wishlist.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class CartService {
   private cartCountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   cartCount$: Observable<number> = this.cartCountSubject.asObservable();
   private baseUrl: string = '';
-  constructor(private http: HttpClient, private authService: AuthService, private conf: HttpConfigDressStore) {
+  constructor(private http: HttpClient,private wishService: WishlistService, private authService: AuthService, private conf: HttpConfigDressStore) {
     this.baseUrl = `${this.conf.baseUrl}/user`;
    }
   
@@ -55,9 +57,13 @@ export class CartService {
     return this.http.get<{ cartItems: IProductCartModel[] }>(`${this.baseUrl}/cartData`, httpOptions);
   }
 
+  getCustomer(){
+    const token = this.authService.getToken();
+    const httpOptions =  this.getHttpHeaders(token);
+    return this.http.get<{ customer: ICustomerCartModel }>(`${this.baseUrl}/customer`, httpOptions);
+  }
 
   triggerCartandWishCountUpdate(cartCount?: number | null, wishCount?: number | null): void {
-    
     this.getCartCount(cartCount);
   }
  

@@ -18,7 +18,7 @@
                <li class="nav-item">
                   <a class="nav-link" routerLink="/cart">
                      Cart 
-                     <i class="bi bi-cart"></i>
+                     <i *ngIf="!(cartCount != 0 && cartCount != null)" class="bi bi-cart"></i>
                        <span class="cart-count" *ngIf="cartCount != 0 && cartCount != null">{{ cartCount }}</span>
                   </a>
                 </li>
@@ -26,18 +26,19 @@
                    <a class="nav-link"  href="" routerLink="/logout">Logout</a>
                 </li>
                 <li class="nav-item" *ngIf="isAuthenticated">
-                  <a class="nav-link"  href="#" routerLink="/myProfile">My Profile 
+                  <a class="nav-link"  href="" routerLink="/myProfile">My Profile 
                      <i class="bi bi-person-circle"></i></a>
                 </li>
                 <li class="nav-item" *ngIf="isAuthenticated">
-                  <a class="nav-link"  href="#" routerLink="/wishlist">Wishlist 
-                     <i class="bi bi-heart"></i></a>
+                  <a class="nav-link"  href="" routerLink="/wishlist">Wishlist 
+                     <i *ngIf="!(wishCount != 0 && wishCount != null)"  class="bi bi-heart"></i>  <span class="wish-count" *ngIf="wishCount != 0 && wishCount != null">{{ wishCount }}</span></a>
+                    
                 </li>
                 <li class="nav-item" *ngIf="!isAuthenticated">
-                   <a class="nav-link" href="#" routerLink="/login">Login</a>
+                   <a class="nav-link" href="" routerLink="/login">Login</a>
                 </li>
                 <li class="nav-item" *ngIf="!isAuthenticated">
-                   <a class="nav-link" href="#" routerLink="/register">Register</a>
+                   <a class="nav-link" href="" routerLink="/register">Register</a>
                 </li>
              </ul>
           </div>

@@ -1,18 +1,23 @@
 const { verifyToken, addToCartList, getCartCount, getCartData, 
-        addToWishList, changeCartList, removeFromWishList 
+    changeWishList, changeCartList , getCustomerData, getWishesCount, getWishes
     } = require('../services/userService');
 
 const userController = require('express').Router();
 
 
 
-// userController.post('/addWish', async (req, res) => {
-//     const token = req.header('Authorization');
-
-//     const decoded =  verifyToken(token);
-    
-//     await addToWishList(decoded._id, req.body.product);
-// })
+userController.post('/changeWishList', async (req, res) => {
+    try {
+        const token = req.header('Authorization');
+        const decoded = verifyToken(token);
+        
+        await changeWishList(decoded._id, req.body.products);
+        res.json({message: 'changeWishList.' });
+    } catch (error) {
+        console.error('Error changeWishList', error);
+        res.status(500).json({ error: 'Error changeWishList' });
+    }
+})
 
 userController.post('/addToCart', async (req, res) => {
     try {
@@ -52,6 +57,31 @@ userController.get('/cartCount', async (req, res) => {
     }
 })
 
+userController.get('/wishCount', async (req, res) => {
+    try {
+        const token = req.header('Authorization');
+        const decoded = verifyToken(token);
+        
+        let count = await getWishesCount(decoded._id);
+        res.json({count: count });
+    } catch {
+        res.json({count: 0 });
+    }
+})
+
+userController.get('/customer', async (req, res) => {
+    try {
+        const token = req.header('Authorization');
+        const decoded = verifyToken(token);
+        
+        let customer = await getCustomerData(decoded._id);
+        res.json({customer: customer });
+    } catch (error){
+        console.log(error)
+        res.json({customer: {name: "error"}});
+    }
+})
+
 userController.get('/cartData', async (req, res) => {
     try {
         const token = req.header('Authorization');
@@ -61,6 +91,18 @@ userController.get('/cartData', async (req, res) => {
         res.json({cartItems: cartItems });
     } catch {
         res.json({cartItems: 0 });
+    }
+})
+
+userController.get('/getWishes', async (req, res) => {
+    try {
+        const token = req.header('Authorization');
+        const decoded = verifyToken(token);
+        
+        let wishes = await getWishes(decoded._id);
+        res.json({wishes: wishes });
+    } catch {
+        res.json({wishes: 0 });
     }
 })
 

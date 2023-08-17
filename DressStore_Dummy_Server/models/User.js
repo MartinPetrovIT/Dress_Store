@@ -9,7 +9,6 @@ const userSchema = new Schema({
     phone: {type: String},
     wishList: {type: []}, 
     cartList: {type: []}, 
-    category: {type: String},
     price: {type: Number},
     type: {type: String}
 })

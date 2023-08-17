@@ -50,10 +50,7 @@ export class RegisterComponent {
         }
       });
     } else{
-      this.error = 'Invalid credentials'
-      setTimeout(() => {
-        this.error = ''
-      }, 5000);
+      this.registerForm.markAllAsTouched();
     }
   }
 }

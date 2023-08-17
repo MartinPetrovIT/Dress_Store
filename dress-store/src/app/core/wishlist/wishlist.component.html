@@ -1,12 +1,20 @@
-<app-filter-panel></app-filter-panel>
 
+<div class="row">
+
+    <div *ngIf="wishList.length === 0" class="jumbotron col-md-8 offset-3 mt-5">
+        <h1 class="display-4">No Wish Items Yet</h1>
+        <p class="lead">You haven't liked any items yet. Start exploring and add some items to your wishlist!</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" (click)="navigate()" role="button">Explore Clothes</a>
+        </p>
+    </div>
+</div>
 
 <app-product-modal [product]="selectedModel">
 </app-product-modal>
-
-
 <div style="margin-top: 15px;" class="row d-flex justify-content-center mb-4">
-    <div *ngFor="let product of products; let i = index" class="card d-flex flex-column" style="width: 15rem; margin-right: 5px;">
+    <div *ngFor="let product of wishList; let i = index" class="card d-flex flex-column" style="width: 15rem; margin-right: 5px;">
         <img class="card-img-top" src="{{baseImagesUrl + '/' + product.type + '/' + product._id + '/' + product.imageUrls[0]}}" alt="{{product.name}}">
         <div class="card-body flex-grow-1">
             <h5 class="card-title text-truncate">{{product.name}}</h5>

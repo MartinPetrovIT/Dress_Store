@@ -1,19 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
-import { HttpConfigDressStore } from '../../http.config';
-import { IProductExtended } from '../../shared/models/productExtended.model';
+import { Subscription, switchMap } from 'rxjs';
+import { IProductExtended } from 'src/app/shared/models/productExtended.model';
 import { IProductModalModel } from 'src/app/shared/product-modal/product.modal.model';
-import { WishlistService } from 'src/app/shared/services/wishlist.service';
+import { DataService } from '../data.service';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { BehaviorSubject, Subscription, switchMap } from 'rxjs';
 import { IProduct } from '../product.model';
+import { WishlistService } from 'src/app/shared/services/wishlist.service';
+import { HttpConfigDressStore } from 'src/app/http.config';
+import { Router } from '@angular/router';
+
 @Component({
-  selector: 'app-clothes',
-  templateUrl: './clothes.component.html',
-  styleUrls: ['./clothes.component.scss']
+  selector: 'app-wishlist',
+  templateUrl: './wishlist.component.html',
+  styleUrls: ['./wishlist.component.scss']
 })
-export class ClothesComponent implements OnInit, OnDestroy {
-  products: IProductExtended[] = [];
+export class WishlistComponent  implements OnDestroy {
   wishList: IProductExtended[] = [];
   baseImagesUrl: string = "";
   private wishesSubscription: Subscription | null = null;
@@ -31,25 +32,18 @@ export class ClothesComponent implements OnInit, OnDestroy {
     type: '',
     price: 0
   };
-  constructor(private dataService: DataService, private cartService : CartService, private wishService : WishlistService, private conf: HttpConfigDressStore) {
-    this.baseImagesUrl = conf.baseImagesUrl;   
-  }
 
-  ngOnInit(): void {
-    this.wishesSubscription = this.wishService.getWishes().pipe(
-      switchMap(wishes => {
-        this.wishList = wishes.wishes;
-        return this.dataService.getAllProducts();
-      })
-    ).subscribe(products => {
-      this.products = products.map(product => ({
-        ...product,
-        heartActive: this.checkIfItemIsWished(product),
-        showFullText: false
-      }));
+  constructor( private router: Router, private cartService : CartService, private wishService : WishlistService, private conf: HttpConfigDressStore) {
+    this.baseImagesUrl = conf.baseImagesUrl;   
+    this.wishesSubscription = this.wishService.getWishes().subscribe((products) => {
+      this.wishList = products.wishes
     });
 
   this.wishService.getWishCount();
+  }
+
+  navigate(){
+   this.router.navigate(['/clothes'])
   }
 
   ngOnDestroy(): void {
@@ -68,31 +62,18 @@ export class ClothesComponent implements OnInit, OnDestroy {
 
   mapToProductModal(index: number) {
     this.selectedModel = {
-      _id: this.products[index]._id,
-      brand: this.products[index].brand,
-      description: this.products[index].description,
-      name: this.products[index].name,
+      _id: this.wishList[index]._id,
+      brand: this.wishList[index].brand,
+      description: this.wishList[index].description,
+      name: this.wishList[index].name,
       color: '',
       size: '',
-      gender: this.products[index].gender,
-      imageUrls: this.makeImageUrl(this.products[index]),
-      type: this.products[index].type,
-      colors: this.products[index].colors,
-      price: this.products[index].price
+      gender: this.wishList[index].gender,
+      imageUrls: this.makeImageUrl(this.wishList[index]),
+      type: this.wishList[index].type,
+      colors: this.wishList[index].colors,
+      price: this.wishList[index].price
     };
-
-    console.log(this.selectedModel)
-
-  }
-
-  checkIfItemIsWished(item: IProduct){
-    console.log(this.wishList.length)
-    if(this.wishList.filter( x => x._id == item._id).length > 0)
-    {
-      return true;
-    }
-
-    return false;
   }
 
 
@@ -106,22 +87,16 @@ export class ClothesComponent implements OnInit, OnDestroy {
   }
 
   toggleTextExpansion(index: number) {
-    this.products[index].showFullText = !this.products[index].showFullText;
+    this.wishList[index].showFullText = !this.wishList[index].showFullText;
   }
 
   toggleHeart(product: IProductExtended) {
     product.heartActive = !product.heartActive;
     
-    if(product.heartActive) {
-      console.log("active")
-      this.wishList.push(product);
-    } else{
-      console.log("not active")
       this.wishList =  this.wishList.filter(function (prod) {
         return prod._id != product._id;
     });
-    }
-
+    
     this.wishService.getWishCount(this.wishList.length);
   }
   toggleFilterPanel() {

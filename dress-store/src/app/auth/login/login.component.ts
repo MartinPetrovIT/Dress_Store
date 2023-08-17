@@ -38,10 +38,7 @@ export class LoginComponent {
         }
       });
     } else{
-      this.error = 'Invalid credentials'
-      setTimeout(() => {
-        this.error = ''
-      }, 5000);
+      this.loginForm.markAllAsTouched();
     }
   }
 }

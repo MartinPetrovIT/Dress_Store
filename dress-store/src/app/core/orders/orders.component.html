@@ -1,0 +1,68 @@
+<div class="row mt-5">
+    <div class="col-md-6 offset-3 profile-form-container">
+        <h2> Your Orders</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Total Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let order of getPaginatedOrders(); let i = index">
+                    <tr>
+                        <td>{{ order.orderDate }}</td>
+                        <td>{{ order.totalPrice }} $</td>
+                        <td>
+                            <button class="btn btn-primary" type="button" (click)="toggleAccordion(order)">
+                                Details
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td [attr.colspan]="4">
+                            <div *ngIf="order.isOpen">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product</th>
+                                            <th>Size</th>
+                                            <th>Color</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of selectedOrder">
+                                            <td><img [src]="item.imageUrl" alt="Product Image" width="50"></td>
+                                            <td>{{ item.brand +" "+ item.name }} </td>
+                                            <td>{{ item.size }}</td>
+                                            <td>{{ item.color }}</td>
+                                            <td>{{ item.price }} $</td>
+                                            <td>{{ item.quantity }}</td>
+                                            <td>{{ item.total }} $</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" *ngFor="let page of getTotalPages(); let i = index">
+                                <a class="page-link"  (click)="setPage(page)">{{ page }}</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

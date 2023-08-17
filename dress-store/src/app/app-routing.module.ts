@@ -10,6 +10,10 @@ import { CartComponent } from './core/cart/cart.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthRedirectGuard } from './auth/auth-redirect.guard';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { ProfileComponent } from './core/profile/profile.component';
+import { PersonalInfoComponent } from './core/personal-info/personal-info.component';
+import { OrdersComponent } from './core/orders/orders.component';
+import { WishlistComponent } from './core/wishlist/wishlist.component';
 
 const routes: Routes = [
   {
@@ -24,6 +28,10 @@ const routes: Routes = [
       { path: 'clothes', component: ClothesComponent },
       { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }, 
       { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
+      { path: 'myProfile', component: ProfileComponent, canActivate: [AuthGuard] },
+      { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
+      // { path: 'personalInformation', component: PersonalInfoComponent, canActivate: [AuthGuard] },
+      // { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
      // { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
       // Other routes with layout
     ],

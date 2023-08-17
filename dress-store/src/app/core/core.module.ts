@@ -6,8 +6,12 @@ import { HomeComponent } from './home/home.component';
 import { MaterialModule } from "../material.module";
 import { ClothesComponent } from './clothes/clothes.component';
 import { CartComponent } from './cart/cart.component';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DataService } from "./data.service";
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { OrdersComponent } from './orders/orders.component';
+import { ProfileComponent } from './profile/profile.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 @NgModule({
     providers:[
@@ -17,13 +21,18 @@ import { DataService } from "./data.service";
         GlobalLoaderComponent,
         HomeComponent,
         ClothesComponent,
-        CartComponent
+        CartComponent,
+        PersonalInfoComponent,
+        OrdersComponent,
+        ProfileComponent,
+        WishlistComponent
     ],
     imports:[
         CommonModule,
         SharedModule,
         FormsModule,
-        MaterialModule
+        MaterialModule,
+        ReactiveFormsModule
     ],
     exports:[
         GlobalLoaderComponent

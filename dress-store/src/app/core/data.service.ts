@@ -11,7 +11,7 @@ export class DataService{
     this.baseUrl = this.conf.baseUrl + '/data'
  }
 
- hello(){
+ getAllProducts(){
      return this.http.get<Array<IProduct>>(this.baseUrl + '/dress') 
  }
 

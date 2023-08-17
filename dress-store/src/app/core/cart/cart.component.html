@@ -3,28 +3,46 @@
     <div class="col-md-5" style="margin-left: 20px;">
         
         <h2>Checkout</h2>
-        <form (ngSubmit)="submitOrder()" #checkoutForm="ngForm">
+        <form (ngSubmit)="submitOrder()" [formGroup]="checkoutForm">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="customer.name">
+                <input type="text" class="form-control" id="name" formControlName="name" required [(ngModel)]="customer.name">
+            </div>
+            <div *ngIf="checkoutForm.get('name')?.hasError('required') && checkoutForm.get('name')?.touched" class="text-danger">
+                Name is required.
             </div>
             <div class="mb-3">
                 <label for="familyName" class="form-label">Family Name</label>
-                <input type="text" class="form-control" id="familyName" name="familyName" required
+                <input type="text" class="form-control" id="familyName" formControlName="familyName" required
                     [(ngModel)]="customer.familyName">
+            </div>
+            <div *ngIf="checkoutForm.get('familyName')?.hasError('required') && checkoutForm.get('familyName')?.touched" class="text-danger">
+                Family Name is required.
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" id="address" name="address" required
-                    [(ngModel)]="customer.address">
+                <textarea type="text" class="form-control" id="address" formControlName="address" required
+                    [(ngModel)]="customer.address"></textarea>
+            </div>
+            <div *ngIf="checkoutForm.get('address')?.hasError('required') && checkoutForm.get('address')?.touched" class="text-danger">
+                Address is required.
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required [(ngModel)]="customer.phone">
+                <input type="tel" class="form-control" id="phone" formControlName="phone" [(ngModel)]="customer.phone">
+            </div>
+            <div *ngIf="checkoutForm.get('phone')?.hasError('required') && checkoutForm.get('phone')?.touched" class="text-danger">
+                Phone is required.
+            </div>
+            <div *ngIf="checkoutForm.get('phone')?.hasError('minlength') && checkoutForm.get('phone')?.touched" class="text-danger">
+                Phone minimal length is 10.
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required [(ngModel)]="customer.email">
+                <input type="email" class="form-control" id="email" formControlName="email" required [(ngModel)]="customer.email">
+            </div>
+            <div *ngIf="checkoutForm.get('email')?.hasError('required') && checkoutForm.get('email')?.touched" class="text-danger">
+                Email is required.
             </div>
             <button type="submit" class="btn btn-primary">Place Order</button>
         </form>
@@ -51,16 +69,23 @@
                     <td>{{ item.brand +  ' - ' + item.name }}</td>
                     <td>{{ item.size }}</td>
                     <td>{{ item.color }}</td>
-                    <td>{{ item.price }}</td>
+                    <td>{{ item.price }}$</td>
                     <td>
                         <select class="form-select" [(ngModel)]="item.quantity" (ngModelChange)="updateTotal(i)">
                             <option *ngFor="let qty of quantities" [value]="qty">{{   qty   }}</option>
                         </select>
                     </td>
-                    <td>{{ item.total }}</td>
+                    <td>{{ item.total }}$</td>
                     <td><button class="btn btn-danger" (click)="removeFromCart(i)">Remove</button></td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                  <td colspan="6"></td>
+                  <td><strong>Total:</strong></td>
+                  <td>{{ calculateTotal() }}$</td>
+                </tr>
+              </tfoot>
         </table>
     </div>
 

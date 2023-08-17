@@ -32,34 +32,48 @@ async function getCartCount(id) {
     let existing = await User.findById(id);
     return existing.cartList.length;
 }
+
+async function getWishesCount(id) {
+    let existing = await User.findById(id);
+    return existing.wishList.length;
+}
+
+
+async function getCustomerData(id) {
+    let existing = await User.findById(id);
+    let user = {
+        name: existing.name,
+        email: existing.email,
+        phone: existing.phone,
+        address: existing.address,
+        familyName: existing.familyName,
+      } 
+
+    return user;
+}
+
 async function getCartData(id) {
     let existing = await User.findById(id);
     return existing.cartList;
 }
 
-async function addToWishList(id, product) {
+
+async function getWishes(id) {
     let existing = await User.findById(id);
-
-    existing.wishList.push(product);
-    await existing.save();
+    return existing.wishList;
 }
-
-async function removeFromWishList(id, product) {
-    function filterById(value) {
-        return value._id != product._id
-    }
-    let existing = await User.findById(id);
-
-    existing.wishList.filter(filterById);
-    await existing.save();
-}
-
 async function addToCartList(id, product) {
     let existing = await User.findById(id);
     existing.cartList.push(product);
     await existing.save();
 }
 
+
+async function changeWishList(id, products) {
+    let existing = await User.findById(id);
+    existing.wishList = JSON.parse(JSON.stringify(products));
+    await existing.save();
+}
 
 async function changeCartList(id, products) {
 
@@ -103,10 +117,12 @@ module.exports = {
     register,
     login,
     verifyToken,
-    addToWishList,
-    removeFromWishList,
+    getWishesCount,
+    changeWishList,
     addToCartList,
     getCartCount,
     getCartData,
     changeCartList,
+    getCustomerData,
+    getWishes
 }
